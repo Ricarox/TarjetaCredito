@@ -75,12 +75,16 @@
                     <h5 class="titulo">LISTADO DE TARJETAS</h5>
                     <table class="table">
                         <tbody>
-                            <tr *ngFor="let tarjeta of listTarjetas">
+                            <tr *ngFor="let tarjeta of listTarjetas; let i= index">
                                 <td>{{tarjeta.titular}}</td>
                                 <td>{{tarjeta.numerotarjeta}}</td>
                                 <td>{{tarjeta.fechaExpiracion}}</td>
-                                <td><i class="far fa-edit text-info"></i></td>
-                                <td><i class="far fa-trash-alt text-danger"></i></td>
+                                <td>
+                                    <i class="far fa-edit text-info"></i>
+                                </td>
+                                <td>
+                                    <i (click)="eliminarTarjeta(i)" class="far fa-trash-alt text-danger"></i>
+                                </td>
                             </tr>
 
                         </tbody>
