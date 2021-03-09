@@ -9,10 +9,7 @@ import { TarjetaService } from '../../services/tarjeta.service';
   styleUrls: ['./tarjeta-credito.component.css']
 })
 export class TarjetaCreditoComponent implements OnInit {
-  listTarjetas: any[]=[
-    {titular: 'Juan Perez', numerotarjeta: '154540', fechaExpiracion: '11/12', cvv:'123'},
-    {titular: 'Ricardo', numerotarjeta: '1565644356', fechaExpiracion: '05/09', cvv:'050'}
-  ];
+  listTarjetas: any[]=[];
 
   form: FormGroup;
 
@@ -33,7 +30,7 @@ export class TarjetaCreditoComponent implements OnInit {
 
   obtenerTarjetas(){
     this._tarjetaSvc.getListTarjetas().subscribe(data=>{
-      console.log(data);
+      this.listTarjetas=data;
     }, error=> {
       console.log(error);
     } );
@@ -52,9 +49,14 @@ export class TarjetaCreditoComponent implements OnInit {
     this.toastr.success('La tarjeta fue registrada con exito', 'Tarjeta Registrada');
     this.form.reset();
   }
-  eliminarTarjeta(index: number){
-    this.listTarjetas.splice(index,1);
-    this.toastr.error('La tarjeta fue elimina con exito','Tarjeta Eliminada')
+  eliminarTarjeta(id: number){
+    this._tarjetaSvc.deleteTarjeta(id).subscribe(data =>{
+      this.toastr.error('La tarjeta fue elimina con exito','Tarjeta Eliminada');
+      this.obtenerTarjetas();
+    }, error =>{
+      console.log(error);
+    });
+    
 
   }
 
