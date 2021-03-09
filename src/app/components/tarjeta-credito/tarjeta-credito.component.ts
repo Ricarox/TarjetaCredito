@@ -37,7 +37,8 @@ export class TarjetaCreditoComponent implements OnInit {
   }
 
   agregarTarjeta(){
-    console.log(this.form);
+    
+
 
     const tarjeta:any={
       titular: this.form.get('titular')?.value,
@@ -45,9 +46,16 @@ export class TarjetaCreditoComponent implements OnInit {
       fechaExpiracion: this.form.get('fechaExpiracion')?.value,
       cvv: this.form.get('cvv')?.value
     }
-    this.listTarjetas.push(tarjeta)
-    this.toastr.success('La tarjeta fue registrada con exito', 'Tarjeta Registrada');
-    this.form.reset();
+    this._tarjetaSvc.saveTarjeta(tarjeta).subscribe(
+      data=>{
+        this.toastr.success('La tarjeta fue registrada con exito', 'Tarjeta Registrada');
+        this.obtenerTarjetas();
+        this.form.reset();
+      }, error =>{
+        this.toastr.error('Oopss Ocurrio un error', 'Error');
+
+        console.log(error);
+      })
   }
   eliminarTarjeta(id: number){
     this._tarjetaSvc.deleteTarjeta(id).subscribe(data =>{
