@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-tarjeta-credito',
@@ -11,9 +12,31 @@ export class TarjetaCreditoComponent implements OnInit {
     {titular: 'Ricardo', numerotarjeta: '1565644356', fechaExpiracion: '05/09', cvv:'050'}
   ];
 
-  constructor() { }
+  form: FormGroup;
+
+  constructor(private fb:FormBuilder) { 
+    this.form=this.fb.group({
+      titular:[''],
+      numerotarjeta:[''],
+      fechaExpiracion:[''],
+      cvv:['']
+    })
+  }
 
   ngOnInit(): void {
+  }
+
+  agregarTarjeta(){
+    console.log(this.form);
+
+    const tarjeta:any={
+      titular: this.form.get('titular')?.value,
+      numerotarjeta: this.form.get('numerotarjeta')?.value,
+      fechaExpiracion: this.form.get('fechaExpiracion')?.value,
+      cvv: this.form.get('cvv')?.value
+    }
+    this.listTarjetas.push(tarjeta)
+    this.form.reset();
   }
 
 }
