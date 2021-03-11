@@ -10,7 +10,7 @@ import { TarjetaService } from '../../services/tarjeta.service';
 })
 export class TarjetaCreditoComponent implements OnInit {
   listTarjetas: any[]=[];
-  accion = "Agregar"
+  accion = "Agregar";
   form: FormGroup;
   id: number| undefined;
 
@@ -46,6 +46,7 @@ export class TarjetaCreditoComponent implements OnInit {
       cvv: this.form.get('cvv')?.value
     }
     if(this.id==undefined){
+
       //agregamos nueva tarjeta
       this._tarjetaSvc.saveTarjeta(tarjeta).subscribe(
         data=>{
